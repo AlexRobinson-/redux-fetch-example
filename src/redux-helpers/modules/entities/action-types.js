@@ -1,0 +1,4 @@
+export const BEGIN_EDITING = 'BEGIN_EDITING';
+export const BEGIN_NEW = 'BEGIN_NEW';
+export const UPDATE_EDITABLE = 'UPDATE_EDITABLE';
+export const STOP_EDITING = 'STOP_EDITING';
