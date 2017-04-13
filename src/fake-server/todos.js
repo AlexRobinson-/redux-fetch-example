@@ -30,11 +30,11 @@ export const createTodo = (userId, fields) => {
   }
 
   const user = getUser(userId)
-  updateUser(id, {
+  updateUser(userId, {
     ...user,
     todos: [
-      ...(user.todos || []),
-      todos[id]
+      ...(user.todos || []).map(todo => todo.id),
+      id
     ]
   })
 

@@ -43,10 +43,10 @@ export const getUser = id => {
 
 export const getUsers = () => Object.keys(users).map(getUser);
 
-
 export const updateUser = (id, fields) => {
   users[id] = fields
 }
+
 export const attemptLogin = (username, password) => {
   const id = usernames[username]
 

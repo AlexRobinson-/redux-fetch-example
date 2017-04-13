@@ -8,7 +8,7 @@ import {
 const reducer = createTree({
   id: {
     initial: null,
-    [LOGIN_SUCCESS]: (_, action) => action.payload.response.userId,
+    [LOGIN_SUCCESS]: (_, action) => action.payload.userId,
     [LOGOUT]: null
   },
   isLoggedIn: {
