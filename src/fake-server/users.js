@@ -36,9 +36,7 @@ export const createUser = (fields) => {
 export const getUser = id => {
   const user = users[id]
 
-  const response = { ...user, todos: user.todos.map(id => getTodo(id)), password: undefined }
-
-  return response
+  return { ...user, todos: user.todos.map(id => getTodo(id)).filter(Boolean), password: undefined }
 }
 
 export const getUsers = () => Object.keys(users).map(getUser);

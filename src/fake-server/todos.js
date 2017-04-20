@@ -1,4 +1,4 @@
-import { getUser, updateUser } from './users';
+import { getUser, updateUser, getUsers } from './users';
 
 const todos = {
   1: {
@@ -30,6 +30,8 @@ export const createTodo = (userId, fields) => {
   }
 
   const user = getUser(userId)
+
+  console.log('user on server', user)
   updateUser(userId, {
     ...user,
     todos: [
@@ -39,6 +41,21 @@ export const createTodo = (userId, fields) => {
   })
 
   return todos[id]
+}
+
+export const removeTodo = id => {
+  delete todos[id];
+
+  const users = getUsers()
+
+  users.forEach(user => {
+    if (user.todos.indexOf(id) >= 0) {
+      updateUser(user.id, {
+        ...user,
+        todos: user.todos.filter(todoId => todoId !== id)
+      })
+    }
+  })
 }
 
 export const getTodos = () => Object.values(todos);

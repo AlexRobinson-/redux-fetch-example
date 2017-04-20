@@ -1,15 +1,24 @@
 import React from 'react';
+import TodoItem from './todo-item';
 
-const TodoList = ({ todos, onSelect = () => undefined }) => (
-  <ul>
+const TodoList = ({ todos, onSelect = () => undefined, onRemove = () => undefined }) => (
+  <div>
     {
       todos.map(
         todo => (
-          <li key={todo.id} onClick={() => onSelect(todo)}>{todo.title}</li>
+          <div key={todo.id} style={{
+            width: 350
+          }}>
+            <TodoItem
+              todoId={todo.id}
+              onSelect={onSelect}
+              onRemove={onRemove}
+            />
+          </div>
         )
       )
     }
-  </ul>
+  </div>
 )
 
 export default TodoList;

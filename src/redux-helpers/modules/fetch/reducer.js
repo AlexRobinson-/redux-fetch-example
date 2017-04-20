@@ -1,34 +1,43 @@
 import createTree from '../../utils/reducers/create-tree';
 import createDynamicReducer from '../../utils/reducers/create-dynamic-reducer';
+import createMetaReducer from './../../utils/reducers/create-meta-reducer';
 import {
   NOT_LOADED,
   FETCHING,
   LOADED,
   FAILED,
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-  FETCH_FAILURE,
-  SLOW_CONNECTION
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+  SLOW_CONNECTION,
 } from './constants';
 
 export default createTree({
-  status: createDynamicReducer({
+  status: createMetaReducer('fetch', createDynamicReducer({
     initial: NOT_LOADED,
-    [FETCH_REQUEST]: [action => action.payload.ref, FETCHING],
-    [FETCH_SUCCESS]: [action => action.payload.ref, LOADED],
-    [FETCH_FAILURE]: [action => action.payload.ref, FAILED]
-  }),
-  failedCount: createDynamicReducer({
+    [REQUEST]: [action => action.ref, FETCHING],
+    [SUCCESS]: [action => action.ref, LOADED],
+    [FAILURE]: [action => action.ref, FAILED]
+  })),
+  failedCount: createMetaReducer('fetch', createDynamicReducer({
     initial: 0,
-    [FETCH_SUCCESS]: [action => action.payload.ref, 0],
-    [FETCH_FAILURE]: [action => action.payload.ref, state => state + 1]
-  }),
+    [SUCCESS]: [action => action.ref, 0],
+    [FAILURE]: [action => action.ref, state => state + 1]
+  })),
+  timestamp: createMetaReducer('fetch', createDynamicReducer({
+    initial: null,
+    [REQUEST]: [action => action.ref, null],
+    [SUCCESS]: [action => action.ref, () => Date.now()]
+  })),
   slow: createDynamicReducer({
     initial: null,
     [SLOW_CONNECTION]: [action => action.payload.ref, true],
-    [FETCH_REQUEST]: [action => action.payload.ref, null],
-    [FETCH_SUCCESS]: [action => action.payload.ref, null],
-    [FETCH_FAILURE]: [action => action.payload.ref, null]
+    default: createMetaReducer('fetch', (state, action) => {
+      return {
+        ...state,
+        [action.ref]: null
+      }
+    })
   })
 });
 
@@ -66,12 +75,15 @@ const getFailedAttempts = (state, ref) => {
   return state.failedCount[ref] || 0
 }
 
-const getHasFailed = (state, ref) => state.status[ref] === FAILED && getFailedAttempts(state, ref) >= 3
+const getHasFailed = (state, ref) => state.status[ref] === FAILED
+
+const getStatus = (state, ref) => state.status[ref] || NOT_LOADED;
 
 export const selectors = {
   getIsLoading,
   getIsFailing,
   getIsSlow,
   getFailedAttempts,
-  getHasFailed
+  getHasFailed,
+  getStatus
 }

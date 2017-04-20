@@ -1,12 +1,30 @@
-import { merge } from 'lodash/object';
-import { hasEntities } from '../helpers';
+import { mergeWith } from 'lodash/object';
+import { hasEntities, getAllEntities } from '../helpers';
+
+function customizer(objValue, srcValue) {
+  if (Array.isArray(objValue)) {
+    return srcValue;
+  }
+}
+
 
 const reducer = (state = {}, action) => {
-  if (hasEntities(action)) {
-    return merge({}, state, action.payload.response.entities)
+  if (!hasEntities(action)) {
+    return state
   }
 
-  return state;
+  return mergeWith({}, state, getAllEntities(action), customizer)
+}
+
+export const createEntityReducer = reducers => (state, action) => {
+  const result = Object.keys(reducers).reduce(
+    (newState, key) => ({
+      ...newState,
+      [key]: reducers[key](newState[key], action)
+    }),
+    reducer(state, action)
+  )
+  return result
 }
 
 export default reducer;

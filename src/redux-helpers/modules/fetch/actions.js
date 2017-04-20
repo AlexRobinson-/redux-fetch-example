@@ -1,16 +1,23 @@
 import action from './../../utils/actions/action'
 import {
   SLOW_CONNECTION,
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-  FETCH_FAILURE
+  REQUEST,
+  SUCCESS,
+  FAILURE
 } from './constants'
+import { selectors } from './reducer'
 
 export const slowConnection = ref => action(SLOW_CONNECTION, { ref })
 
-export const fetchRequest = (ref, payload = {}, ...params) => action(FETCH_REQUEST, { ...payload, ref }, ...params)
-export const fetchSuccess = (ref, payload = {}, ...params) => action(FETCH_SUCCESS, { ...payload, ref }, ...params)
-export const fetchFailure = (ref, payload = {}, ...params) => action(FETCH_FAILURE, { ...payload, ref }, ...params)
+const _fetchAction = (payload = {}, meta = {}, ref, status) => action(
+  `${ref}_${status}`,
+  payload,
+  { ...meta, fetch: { ref, type: status } }
+)
+
+export const fetchRequest = (ref, payload, meta) => _fetchAction(payload, meta, ref, REQUEST)
+export const fetchSuccess = (ref, payload, meta) => _fetchAction(payload, meta, ref, SUCCESS)
+export const fetchFailure = (ref, payload, meta) => _fetchAction(payload, meta, ref, FAILURE)
 
 const slowConnectionTimer = () => new Promise(res => {
   setTimeout(() => res({ slow: true }), 3000)
@@ -33,8 +40,29 @@ export const connectionStats = (ref, promise) => async dispatch => {
   }
 }
 
+export const optimisticUpdate = (ref, optimisticEntities) => action(
+  'OPTIMISTIC_UPDATE',
+  {
+    ref,
+    optimisticEntities
+  }
+)
 
-export const fetchAction = (ref, promise) => async dispatch => {
+export const cancelOptimisticUpdate = ref => action(
+  'CANCEL_OPTIMISTIC_UPDATE',
+  {
+    ref
+  }
+)
+
+export const fetchAction = (ref, promise, { fetchSelectors = selectors, optimistic } = {}) => async (dispatch, getState) => {
+  if (fetchSelectors.getIsLoading(getState(), ref)) {
+    return;
+  }
+
+  if (optimistic) {
+    dispatch(optimisticUpdate(ref, optimistic))
+  }
   dispatch(fetchRequest(ref))
   dispatch(connectionStats(ref, promise))
 
@@ -45,7 +73,7 @@ export const fetchAction = (ref, promise) => async dispatch => {
     return { error }
   }
 
-  dispatch(fetchSuccess(ref, { response }))
+  dispatch(fetchSuccess(ref, response))
 
   return { response }
 }

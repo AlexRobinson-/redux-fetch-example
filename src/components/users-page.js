@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchUsers } from './../actions/user';
 import UserList from './users-list';
-import { userSelectors } from './../reducers'
+import { userSelectors, fetchSelectors } from './../reducers'
+import Loading from './loading';
 
 class UsersPage extends Component {
   componentWillMount() {
@@ -13,9 +14,12 @@ class UsersPage extends Component {
     return (
       <div>
         <h2>Users Page</h2>
-        <UserList
-          users={this.props.users}
-        />
+
+        <Loading status={this.props.fetchStatus}>
+          <UserList
+            users={this.props.users}
+          />
+        </Loading>
       </div>
 
     )
@@ -24,7 +28,8 @@ class UsersPage extends Component {
 
 export default connect(
   state => ({
-    users: userSelectors.getAll(state)
+    users: userSelectors.getAll(state),
+    fetchStatus: fetchSelectors.getStatus(state, 'FETCH_USERS')
   }),
   { fetchUsers }
 )(UsersPage);
