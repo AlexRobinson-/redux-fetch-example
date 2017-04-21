@@ -9,14 +9,14 @@ const TodoListItem = ({ todo, onSelect, onRemove, failedUpdate, failedSave, retr
   <div
     className={classNames(
       'Todo',
-      {
-        'Todo__failed': failedUpdate,
-        'Todo__optimistic': !failedUpdate && todo.__optimistic === true,
-      }
-    )}
-  >
-    <div className="Todo_Details">
-      <div>
+        {
+          'Todo__failed': failedUpdate,
+          'Todo__optimistic': !failedUpdate && todo.__optimistic === true,
+        }
+        )}
+        >
+        <div className="Todo_Details">
+          <div>
         <p onClick={() => onSelect(todo)}>{todo.title}</p>
 
         {

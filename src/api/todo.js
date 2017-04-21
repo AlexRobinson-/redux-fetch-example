@@ -24,11 +24,13 @@ export const fetchTodos = () => delay()
   .then(() => todoServer.getTodos())
   .then(response => normalize(response, [Todo]))
   .then(response => ({ response }))
+  .catch(error => ({ error }))
 
 export const fetchTodo = id => delay()
   .then(() => todoServer.getTodo(id))
   .then(response => normalize(response, Todo))
   .then(response => ({ response }))
+  .catch(error => ({ error }))
 
 export const createTodo = (userId, todo) => delay()
   .then(() => todoServer.createTodo(userId, todo))
@@ -40,12 +42,10 @@ export const saveTodo = (id, fields) => delay()
   .then(() => todoServer.updateTodo(id, fields))
   .then(response => normalize(response, Todo))
   .then(response => ({ response }))
-  .catch(error => {
-    console.log('got error', error)
-    return { error }
-  })
+  .catch(error => ({ error }))
 
 export const removeTodo = (todoId, userId) => delay()
   .then(() => todoServer.removeTodo(todoId))
   .then(() => ({ userId, todoId }))
   .then(response => ({ response }))
+  .catch(error => ({ error }))

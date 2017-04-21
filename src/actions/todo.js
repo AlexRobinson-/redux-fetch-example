@@ -48,7 +48,13 @@ const cancelAllOptimisticUpdates = id => (dispatch, getState) => {
 }
 
 export const removeTodo = id => (dispatch, getState) => {
+  if (id === 'optimistic-todo') {
+    dispatch(cancelOptimisticUpdate(CREATE_TODO))
+    return;
+  }
+
   dispatch(cancelAllOptimisticUpdates(id))
+
   if (todoSelectors.getEditable(getState()).id === id) {
     dispatch(stopEditing(id))
   }
