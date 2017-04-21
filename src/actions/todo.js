@@ -12,7 +12,7 @@ export const {
   beginNew,
   update,
   stopEditing
-} = createEditActions('todo')
+} = createEditActions('todo');
 ``
 export const fetchTodos = () => fetchAction(FETCH_TODOS, todoApi.fetchTodos())
 
