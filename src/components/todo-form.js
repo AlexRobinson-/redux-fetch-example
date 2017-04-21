@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { todoSelectors } from './../reducers';
 import { beginNew, update, stopEditing, createTodo, saveTodo } from './../actions/todo';
+import './todo-form.css';
 
 class TodoForm extends Component {
 
@@ -12,13 +13,11 @@ class TodoForm extends Component {
   render() {
     return (
       <div>
-        <h2>Todo Form</h2>
-
         {
           this.props.todo && (
-            <div>
-              <label>Title</label>
+            <div className="TodoForm">
               <input
+                placeholder="What do you have to do?"
                 value={this.props.todo.title || ''}
                 onChange={e => this.props.update({ title: e.target.value })}
               />

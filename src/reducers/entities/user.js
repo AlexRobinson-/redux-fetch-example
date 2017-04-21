@@ -1,6 +1,6 @@
+import { fetchSuccessType } from 'alexs-redux-fetch/fetch';
+import { updateEntity } from 'alexs-redux-fetch/entities/helpers';
 import { CREATE_TODO, REMOVE_TODO } from './../../constants';
-import { fetchSuccessType } from './../../redux-helpers/modules/fetch';
-import { updateEntity } from './../../redux-helpers/modules/entities/helpers';
 
 export default (state = {}, action) => {
   switch (action.type) {

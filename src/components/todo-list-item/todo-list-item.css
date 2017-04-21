@@ -1,0 +1,30 @@
+.Todo {
+  position: relative;
+  padding: 10px;
+}
+
+.Todo p {
+  margin: 0;
+}
+
+.Todo_Details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Todo_Details button {
+  align-self: center;
+}
+
+.Todo__failed {
+  background-color: #ffcac7;
+}
+
+.Todo__optimistic {
+  background-color: #c0f3ff;
+}
+
+.Todo_Options {
+  padding-top: 10px;
+}

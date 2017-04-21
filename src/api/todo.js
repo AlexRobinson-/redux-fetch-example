@@ -4,8 +4,15 @@ import { User } from './user';
 import { getAccount } from './../reducers';
 
 const delay = (timeout = 1000) => new Promise(
-  res => {
-    setTimeout(res, timeout)
+  (res, rej) => {
+    setTimeout(() => {
+      if (Math.floor(Math.random() * 2) === 1) {
+        res()
+      } else {
+        rej(new Error('failed'))
+      }
+
+    }, timeout)
   }
 )
 
@@ -27,15 +34,16 @@ export const createTodo = (userId, todo) => delay()
   .then(() => todoServer.createTodo(userId, todo))
   .then(response => ({ ...normalize(response, Todo), userId }))
   .then(response => ({ response }))
+  .catch(error => ({ error }))
 
 export const saveTodo = (id, fields) => delay()
-  .then(() => {
-    throw new Error()
-  })
   .then(() => todoServer.updateTodo(id, fields))
   .then(response => normalize(response, Todo))
   .then(response => ({ response }))
-  .catch(error => ({ error }))
+  .catch(error => {
+    console.log('got error', error)
+    return { error }
+  })
 
 export const removeTodo = (todoId, userId) => delay()
   .then(() => todoServer.removeTodo(todoId))

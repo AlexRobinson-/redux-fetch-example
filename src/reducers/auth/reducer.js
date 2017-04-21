@@ -1,6 +1,5 @@
-import createTree from './../../redux-helpers/utils/reducers/create-tree';
+import { createTree } from 'alexs-redux-helpers/reducers'
 import {
-  LOGIN_ATTEMPT,
   LOGIN_SUCCESS,
   LOGOUT
 } from './../../constants';

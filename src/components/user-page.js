@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchUser } from './../actions/user';
-import UserProfile from './user-profile';
+import UserProfile from './user-profile/user-profile';
 
 class UserPage extends Component {
   componentWillMount() {
@@ -10,13 +10,9 @@ class UserPage extends Component {
 
   render() {
     return (
-      <div>
-        <h2>User Page</h2>
-        <UserProfile
-          userId={this.props.userId}
-        />
-      </div>
-
+      <UserProfile
+        userId={this.props.userId}
+      />
     )
   }
 }

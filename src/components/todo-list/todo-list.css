@@ -1,0 +1,9 @@
+.TodoList {
+  border: 1px solid black;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.TodoList .TodoList_Item:not(:first-child) {
+  border-top: 1px solid black;
+}

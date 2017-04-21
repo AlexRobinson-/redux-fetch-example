@@ -1,5 +1,5 @@
 import React from 'react';
-import { LOADED, FETCHING } from './../redux-helpers/modules/fetch/constants';
+import { LOADED, FETCHING } from 'alexs-redux-fetch/fetch/constants';
 
 const Loading = ({ status, children }) => {
   if (status === LOADED) {

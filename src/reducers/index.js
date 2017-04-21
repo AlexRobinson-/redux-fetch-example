@@ -1,23 +1,18 @@
 import { combineReducers } from 'redux';
-import { fetchSelectors as rawFetchSelectors, createEntitySelector } from './../redux-helpers/modules';
-import nestSelectors from './../redux-helpers/utils/selectors/nest-selectors';
+import nestSelectors from 'alexs-redux-helpers/selectors/nest-selectors';
+import { selectors, createEntitySelector } from 'alexs-redux-fetch';
 import auth, { selectors as rawAuthSelectors } from './auth';
 import entities from './entities';
-import optimistic from '../redux-helpers/modules/entities/reducers/optimistic';
 
 export default combineReducers({
-  entities: (state, action) => {
-    console.log(state, action, entities(state, action))
-    return entities(state, action)
-  },
-  auth,
-  optimistic
+  entities,
+  auth
 })
 
 export const todoSelectors = nestSelectors(createEntitySelector('todo'), state => state.entities);
 export const userSelectors = nestSelectors(createEntitySelector('user'), state => state.entities);
 
-export const fetchSelectors = nestSelectors(rawFetchSelectors, state => state.entities);
+export const fetchSelectors = nestSelectors(selectors.fetch, state => state.entities);
 
 export const authSelectors = nestSelectors(rawAuthSelectors, state => state.auth);
 

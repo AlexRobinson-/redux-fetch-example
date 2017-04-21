@@ -1,0 +1,9 @@
+
+.UserProfile {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.UserProfile h2 {
+  text-align: center;
+}

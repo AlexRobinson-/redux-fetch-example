@@ -1,14 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TodoForm from './todo-form';
-import UserProfile from './user-profile';
+import UserProfile from './user-profile/user-profile';
 import { authSelectors } from './../reducers';
 
 const AccountPage = ({ accountId }) => (
-  <div>
-    <TodoForm />
-    <UserProfile userId={accountId}/>
-  </div>
+  <UserProfile userId={accountId}/>
 )
 
 export default connect(

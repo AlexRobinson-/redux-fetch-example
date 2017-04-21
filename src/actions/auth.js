@@ -1,5 +1,5 @@
+import action from 'alexs-redux-helpers/actions';
 import { LOGOUT } from './../constants';
-import action from './../redux-helpers/utils/actions/action';
 import { fetchAction } from './fetch';
 import * as authApi from './../api/auth';
 

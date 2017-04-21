@@ -1,0 +1,12 @@
+.TodoForm {
+  display: flex;
+  padding: 10px 0;
+}
+
+.TodoForm input {
+  border: none;
+  border-bottom: 1px solid #000;
+  flex: 1;
+  font-size: 24px;
+  margin-right: 10px;
+}
