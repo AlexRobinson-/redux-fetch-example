@@ -1,10 +1,10 @@
-import { createTree } from 'alexs-redux-helpers/reducers'
+import { createMultiReducer } from 'alexs-redux-helpers/reducers'
 import {
   LOGIN_SUCCESS,
   LOGOUT
 } from './../../constants';
 
-const reducer = createTree({
+const reducer = createMultiReducer({
   id: {
     initial: null,
     [LOGIN_SUCCESS]: (_, action) => action.payload.userId,
