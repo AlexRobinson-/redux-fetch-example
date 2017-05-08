@@ -31,7 +31,6 @@ export const createTodo = (userId, fields) => {
 
   const user = getUser(userId)
 
-  console.log('user on server', user)
   updateUser(userId, {
     ...user,
     todos: [

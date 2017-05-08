@@ -3,25 +3,26 @@ import { connect } from 'react-redux';
 import { fetchUsers } from './../actions/user';
 import UserList from './users-list';
 import { userSelectors, fetchSelectors } from './../reducers'
-import Loading from './loading';
+import { ConnectionStatus } from './status';
+import { FETCH_USERS } from './../refs';
 
 class UsersPage extends Component {
   componentWillMount() {
-    this.props.fetchUsers()
+    this.props.fetchUsers();
   }
 
   render() {
     return (
       <div>
         <h2>Users Page</h2>
-
-        <Loading status={this.props.fetchStatus}>
-          <UserList
-            users={this.props.users}
-          />
-        </Loading>
+        <ConnectionStatus
+          status={this.props.fetchStatus}
+          onRetry={this.props.fetchUsers}
+          error={this.props.error}
+        >
+          <UserList users={this.props.users} />
+        </ConnectionStatus>
       </div>
-
     )
   }
 }
@@ -29,7 +30,9 @@ class UsersPage extends Component {
 export default connect(
   state => ({
     users: userSelectors.getAll(state),
-    fetchStatus: fetchSelectors.getStatus(state, 'FETCH_USERS')
+    fetchStatus: fetchSelectors.getStatus(state, FETCH_USERS),
+    failed: fetchSelectors.getHasFailed(state, FETCH_USERS),
+    error: fetchSelectors.getErrorMessage(state, FETCH_USERS)
   }),
   { fetchUsers }
 )(UsersPage);

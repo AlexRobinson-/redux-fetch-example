@@ -1,19 +1,20 @@
 import { createMultiReducer } from 'alexs-redux-helpers/reducers'
+import { successType } from 'alexs-redux-fetch/fetch';
 import {
-  LOGIN_SUCCESS,
+  LOGIN,
   LOGOUT
-} from './../../constants';
+} from './../../refs';
 
 const reducer = createMultiReducer({
   id: {
     initial: null,
-    [LOGIN_SUCCESS]: (_, action) => action.payload.userId,
-    [LOGOUT]: null
+    [successType(LOGIN)]: (_, action) => action.payload.userId,
+    [successType(LOGOUT)]: null
   },
   isLoggedIn: {
     initial: false,
-    [LOGIN_SUCCESS]: true,
-    [LOGOUT]: false
+    [successType(LOGIN)]: true,
+    [successType(LOGOUT)]: false
   }
 });
 

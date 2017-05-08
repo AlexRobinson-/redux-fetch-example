@@ -1,27 +1,40 @@
 import { combineReducers } from 'redux';
 import nestSelectors from 'alexs-redux-helpers/selectors/nest-selectors';
-import { selectors, createEntitySelector } from 'alexs-redux-fetch';
+import { createFetchSelectors, createEntitySelectors, entitySelectors } from 'alexs-redux-fetch';
 import auth, { selectors as rawAuthSelectors } from './auth';
-import entities from './entities';
+import api from './api';
 
 export default combineReducers({
-  entities,
+  api,
   auth
 })
 
-export const todoSelectors = nestSelectors(createEntitySelector('todo'), state => state.entities);
-export const userSelectors = nestSelectors(createEntitySelector('user'), state => state.entities);
+const getIsFresh = (state, entityName, id) => {
+  const timestamp = entitySelectors.getTimestamp(state, entityName, id);
 
-export const fetchSelectors = nestSelectors(selectors.fetch, state => state.entities);
+  if (!timestamp) return false;
+
+  return Date.now() - timestamp < 5000;
+}
+
+const customEntitySelectors = {
+  ...entitySelectors,
+  getIsFresh
+}
+
+export const todoSelectors = createEntitySelectors('todo', state => state.api, customEntitySelectors);
+export const userSelectors = createEntitySelectors('user', state => state.api, customEntitySelectors);
+
+export const fetchSelectors = createFetchSelectors(state => state.api);
 
 export const authSelectors = nestSelectors(rawAuthSelectors, state => state.auth);
 
-export const getAccount = state => {
+export const getAccount = (state, withOptimistic = true) => {
   if (!authSelectors.getIsLoggedIn(state)) {
     return null
   }
 
-  return userSelectors.getById(state, authSelectors.getUserId(state))
+  return userSelectors.getById(state, authSelectors.getUserId(state), withOptimistic)
 }
 
 export const getUsersTodos = (state, id) => {
@@ -32,4 +45,10 @@ export const getUsersTodos = (state, id) => {
   }
 
   return user.todos.map(id => todoSelectors.getById(state, id)).filter(Boolean)
+}
+
+export const getIsApiFresh = (state, ref) => {
+  const timestamp = fetchSelectors.getTimestamp(state, ref);
+
+  return Date.now() - timestamp < 5000;
 }

@@ -14,14 +14,10 @@ const UserProfile = ({ user, todos, isAccount, beginEditing, removeTodo }) => (
 
     <TodoList
       todos={todos}
+      isAccount={isAccount}
       onSelect={todo => {
         if (isAccount) {
           beginEditing(todo);
-        }
-      }}
-      onRemove={todo => {
-        if (isAccount) {
-          removeTodo(todo.id)
         }
       }}
     />

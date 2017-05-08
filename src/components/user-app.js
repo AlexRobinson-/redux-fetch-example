@@ -5,16 +5,13 @@ import { Switch, Route, Link } from 'react-router-dom';
 import AccountPage from './account-page';
 import UsersPage from './users-page';
 import UserPage from './user-page';
+import NavBar from './nav-bar';
 import { logout } from './../actions/auth';
 
 const UserApp = ({ logout }) => (
   <Router>
     <div>
-      <h1>Todo List</h1>
-      <button onClick={() => logout()}>Logout</button>
-
-      <Link to='/'>Home</Link>
-      <Link to='/users'>users</Link>
+      <NavBar />
 
       <Switch>
         <Route

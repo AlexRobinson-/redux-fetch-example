@@ -48,7 +48,7 @@ export const updateUser = (id, fields) => {
 export const attemptLogin = (username, password) => {
   const id = usernames[username]
 
-  if (!id || !users[id].password === password) {
+  if (!id || users[id].password !== password) {
     return { error: 'Account or password is not correct' }
   }
 

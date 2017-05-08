@@ -1,25 +1,16 @@
-import { schema, normalize } from 'normalizr';
+import { normalize } from 'normalizr';
 import { getUsers, getUser } from './../fake-server/users';
-import { Todo } from './todo';
+import { User } from './../schemas';
+import api from './api';
 
-const delay = (timeout = 1000) => new Promise(
-  res => {
-    setTimeout(res, timeout)
-  }
-)
-
-const { Entity } = schema;
-
-export const User = new Entity('user', {
-  todos: [Todo]
-});
-
-export const fetchUsers = () => delay()
+export const fetchUsers = () => api()
   .then(() => getUsers())
   .then(response => normalize(response, [User]))
   .then(response => ({ response }))
+  .catch(error => ({ error: error.message }))
 
-export const fetchUser = id => delay()
+export const fetchUser = id => api()
   .then(() => getUser(id))
   .then(response => normalize(response, User))
   .then(response => ({ response }))
+  .catch(error => ({ error: error.message }))

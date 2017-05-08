@@ -1,13 +1,13 @@
 import { normalize } from 'normalizr';
 import { attemptLogin } from './../fake-server/users';
-import { User } from './user';
+import User from './../schemas/user';
+import api from './api';
 
-const delay = (timeout = 1000) => new Promise(
-  res => {
-    setTimeout(res, timeout)
-  }
-)
-
-export const login = (username, password) => delay()
+export const login = (username, password) => api(false)
   .then(() => attemptLogin(username, password))
   .then(({ error, user }) => error ? { error } : { response: { ...normalize(user, User), userId: user.id } })
+  .catch(error => ({ error: error.message }))
+
+export const logout = () => api()
+  .then(response => ({ response }))
+  .catch(error => ({ error: error.message }))

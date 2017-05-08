@@ -1,51 +1,41 @@
-import { schema, normalize } from 'normalizr';
+import { normalize } from 'normalizr';
 import * as todoServer from './../fake-server/todos';
-import { User } from './user';
-import { getAccount } from './../reducers';
+import { Todo } from './../schemas';
+import api from './api';
 
-const delay = (timeout = 1000) => new Promise(
-  (res, rej) => {
-    setTimeout(() => {
-      if (Math.floor(Math.random() * 2) === 1) {
-        res()
-      } else {
-        rej(new Error('failed'))
-      }
-
-    }, timeout)
-  }
-)
-
-const { Entity } = schema;
-
-export const Todo = new Entity('todo');
-
-export const fetchTodos = () => delay()
+export const fetchTodos = () => api()
   .then(() => todoServer.getTodos())
   .then(response => normalize(response, [Todo]))
   .then(response => ({ response }))
-  .catch(error => ({ error }))
+  .catch(error => ({ error: error.message }))
 
-export const fetchTodo = id => delay()
+export const fetchTodo = id => api()
   .then(() => todoServer.getTodo(id))
   .then(response => normalize(response, Todo))
   .then(response => ({ response }))
-  .catch(error => ({ error }))
+  .catch(error => ({ error: error.message }))
 
-export const createTodo = (userId, todo) => delay()
+export const createTodo = (userId, todo) => api()
   .then(() => todoServer.createTodo(userId, todo))
   .then(response => ({ ...normalize(response, Todo), userId }))
   .then(response => ({ response }))
-  .catch(error => ({ error }))
+  .catch(error => ({ error: error.message }))
 
-export const saveTodo = (id, fields) => delay()
+export const saveTodo = (id, fields) => api()
   .then(() => todoServer.updateTodo(id, fields))
   .then(response => normalize(response, Todo))
   .then(response => ({ response }))
-  .catch(error => ({ error }))
+  .catch(error => ({ error: error.message }))
 
-export const removeTodo = (todoId, userId) => delay()
+export const removeTodo = (todoId, getAccount) => api()
   .then(() => todoServer.removeTodo(todoId))
-  .then(() => ({ userId, todoId }))
   .then(response => ({ response }))
-  .catch(error => ({ error }))
+  .catch(error => ({ error: error.message }))
+
+export default {
+  fetchTodos,
+  fetchTodo,
+  createTodo,
+  saveTodo,
+  removeTodo
+}
