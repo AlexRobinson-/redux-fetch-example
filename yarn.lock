@@ -52,15 +52,16 @@ ajv@^4.7.0, ajv@^4.9.1:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
-alexs-redux-fetch@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/alexs-redux-fetch/-/alexs-redux-fetch-1.0.0.tgz#02c7d0ee32b92eed0455f7283b88f61eec2ca718"
+alexs-redux-fetch@^1.0.37:
+  version "1.0.37"
+  resolved "https://registry.yarnpkg.com/alexs-redux-fetch/-/alexs-redux-fetch-1.0.37.tgz#a299d1b0d33e6acd7b0e40b55c3beee8f645efbb"
   dependencies:
     alexs-redux-helpers "^1.0.7"
+    babel-polyfill "^6.23.0"
 
-alexs-redux-helpers@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/alexs-redux-helpers/-/alexs-redux-helpers-1.0.0.tgz#2f6cfb1e31a33c5d852bc28c414b07cc17feb760"
+alexs-redux-helpers@^1.0.15:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/alexs-redux-helpers/-/alexs-redux-helpers-1.0.15.tgz#e544bac2836ffa0d3fa2d8ed8edeff4139eb24b7"
 
 alexs-redux-helpers@^1.0.7:
   version "1.0.7"
@@ -762,6 +763,14 @@ babel-plugin-transform-strict-mode@^6.24.1:
   dependencies:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
+
+babel-polyfill@^6.23.0:
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
+  dependencies:
+    babel-runtime "^6.22.0"
+    core-js "^2.4.0"
+    regenerator-runtime "^0.10.0"
 
 babel-preset-env@1.2.1:
   version "1.2.1"
