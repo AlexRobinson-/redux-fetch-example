@@ -12,11 +12,12 @@ import {
 } from './../../actions/todo';
 import FailedTodoControls from './failed-todo-controls';
 import RegularTodoControls from './regular-todo-controls';
+import './todo-controls.css';
 
 const TodoControls = ({ todoId, hasFailed, failMessage, retryAction, cancelAction, dispatch, pendingMessage }) => {
   if (pendingMessage) {
     return (
-      <div>{pendingMessage}</div>
+      <div className='TodoControls TodoControls__pending'>{pendingMessage}</div>
     )
   }
 

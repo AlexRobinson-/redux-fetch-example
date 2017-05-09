@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TodoList from '../todo-list/todo-list';
-import TodoForm from './../todo-form';
+import TodoForm from '../todo-form';
+import Container from './../container';
 import { userSelectors, authSelectors, getUsersTodos, fetchSelectors } from './../../reducers';
 import { beginEditing, removeTodo } from '../../actions/todo';
 import './user-profile.css';
 
 const UserProfile = ({ user, todos, isAccount, beginEditing, removeTodo }) => (
-  <div className='UserProfile'>
+  <Container className='UserProfile'>
     <h2>User | {user.username}</h2>
 
     { isAccount && <TodoForm /> }
@@ -21,7 +22,7 @@ const UserProfile = ({ user, todos, isAccount, beginEditing, removeTodo }) => (
         }
       }}
     />
-  </div>
+  </Container>
 )
 
 export default connect(

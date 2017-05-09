@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchUser } from './../actions/user';
-import UserProfile from './user-profile/user-profile';
+import { fetchUser } from '../../actions/user';
+import UserProfile from '../user-profile/user-profile';
 
 class UserPage extends Component {
   componentWillMount() {
@@ -18,10 +18,6 @@ class UserPage extends Component {
 }
 
 export default connect(
-  (state, ownProps) => {
-    return {
-      userId: ownProps.match.params.userId
-    }
-  },
+  undefined,
   { fetchUser }
 )(UserPage);

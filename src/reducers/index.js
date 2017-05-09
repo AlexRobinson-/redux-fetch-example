@@ -50,5 +50,7 @@ export const getUsersTodos = (state, id) => {
 export const getIsApiFresh = (state, ref) => {
   const timestamp = fetchSelectors.getTimestamp(state, ref);
 
+  console.log('checking fresh', Date.now() - timestamp < 5000, Date.now() - timestamp, timestamp)
+
   return Date.now() - timestamp < 5000;
 }

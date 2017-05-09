@@ -1,7 +1,8 @@
 import React from 'react';
+import './todo-controls.css';
 
 const TodoFailedControls = ({ failMessage, retryAction, cancelAction }) => (
-  <div>
+  <div className='TodoControls TodoControls__failed'>
     {failMessage}
     <button onClick={() => retryAction()}>
       Try again

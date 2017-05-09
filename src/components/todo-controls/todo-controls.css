@@ -1,0 +1,11 @@
+.TodoControls {
+  margin-left: 10px;
+}
+
+.TodoControls__failed > button {
+  margin-left: 10px;
+}
+
+.TodoControls__pending {
+  font-style: italic;
+}

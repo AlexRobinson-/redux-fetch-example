@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { removeTodo } from '../../actions/todo';
+import './todo-controls.css';
 
 const RegularTodoControls = ({ todoId, removeTodo }) => (
-  <div>
+  <div className='TodoControls'>
     <button onClick={() => removeTodo(todoId)}>X</button>
   </div>
 )
