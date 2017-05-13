@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { todoSelectors } from './../../reducers'
+import { todoSelectors } from './../../reducers/selectors'
 import TodoControls from './../todo-controls';
 import './todo-item.css';
 

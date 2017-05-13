@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import TodoList from '../todo-list/todo-list';
 import TodoForm from '../todo-form';
 import Container from './../container';
-import { userSelectors, authSelectors, getUsersTodos, fetchSelectors } from './../../reducers';
+import { userSelectors, authSelectors, fetchSelectors } from './../../reducers/selectors';
 import { beginEditing, removeTodo } from '../../actions/todo';
 import './user-profile.css';
 
@@ -28,13 +28,13 @@ const UserProfile = ({ user, todos, isAccount, beginEditing, removeTodo }) => (
 export default connect(
   (state, ownProps) => {
     const user = userSelectors.getById(state, ownProps.userId)
-    const todos = getUsersTodos(state, ownProps.userId)
+    const todos = userSelectors.getTodos(state, ownProps.userId)
     const fetchStatus = fetchSelectors.getStatus(state, 'FETCH_TODOS')
 
     return {
       user,
       todos,
-      isAccount: authSelectors.getUserId(state) == ownProps.userId,
+      isAccount: authSelectors.getUserId(state) === +ownProps.userId,
       fetchStatus
     }
   },

@@ -5,7 +5,7 @@ import Container from './../container';
 import { ConnectionStatus } from './../status';
 import { FETCH_USERS } from '../../refs';
 import { fetchUsers } from '../../actions/user';
-import { userSelectors, fetchSelectors } from './../../reducers'
+import { userSelectors, fetchSelectors } from './../../reducers/selectors'
 
 class UsersPage extends Component {
   componentWillMount() {

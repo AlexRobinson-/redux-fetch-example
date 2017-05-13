@@ -2,7 +2,7 @@ import { action } from 'alexs-redux-helpers/actions';
 import { createEditActions, cancelOptimisticUpdate } from 'alexs-redux-fetch/entities/actions';
 import { fetchAction } from 'alexs-redux-fetch/fetch/actions';
 import { REMOVE_TODO_FROM_LOCAL_USER } from './action-types';
-import { authSelectors, todoSelectors, fetchSelectors } from './../reducers';
+import { authSelectors, todoSelectors } from './../reducers/selectors';
 import * as refs from './../refs';
 import todoApi from '../api/todo';
 import todoOptimistic from './../optimistic/todo';
@@ -21,10 +21,7 @@ export const fetchTodo = id => fetchAction(refs.getFetchTodoRef(id), todoApi.fet
 export const createTodo = todo => (dispatch, getState) => dispatch(
   fetchAction(
     refs.CREATE_TODO,
-    todoApi.createTodo(
-      authSelectors.getUserId(getState()),
-      todo
-    ),
+    todoApi.createTodo(authSelectors.getUserId(getState()), todo),
     todoOptimistic.createTodo(getState(), todo)
   )
 );
@@ -42,18 +39,21 @@ export const saveTodo = (id, fields) => fetchAction(
 );
 
 export const retrySave = id => (dispatch, getState) => dispatch(
-  saveTodo(id, todoSelectors.getItemUpdateForRef(getState(), id, refs.getSaveTodoRef(id)))
+  saveTodo(
+    id,
+    todoSelectors.getItemUpdateForRef(getState(), id, refs.getSaveTodoRef(id))
+  )
 );
 
 export const cancelSave = id => cancelOptimisticUpdate(refs.getSaveTodoRef(id));
 
 const cancelAllOptimisticUpdates = id => (dispatch, getState) => {
   const ref = refs.getSaveTodoRef(id);
-  if (fetchSelectors.getHasFailed(getState(), ref)) {
-    dispatch(cancelOptimisticUpdate(ref))
-  }
+
+  dispatch(cancelOptimisticUpdate(ref))
 };
 
+// This is required to remove the todo id from the local user object
 const removeTodoFromUserLocally = (userId, todoId) => action(REMOVE_TODO_FROM_LOCAL_USER, { userId, todoId });
 
 export const removeTodo = id => (dispatch, getState) => {

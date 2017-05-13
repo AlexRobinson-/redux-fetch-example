@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchSelectors } from './../../reducers'
+import { fetchSelectors } from './../../reducers/selectors'
 import * as refs from './../../refs';
 import {
   removeTodo,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { todoSelectors } from './../../reducers';
+import { todoSelectors } from './../../reducers/selectors';
 import { beginNew, update, stopEditing, createTodo, saveTodo } from '../../actions/todo';
 import './todo-form.css';
 

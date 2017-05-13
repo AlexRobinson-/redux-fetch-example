@@ -1,18 +1,9 @@
-import { combineReducers } from 'redux';
 import nestSelectors from 'alexs-redux-helpers/selectors/nest-selectors';
 import { createFetchSelectors, createEntitySelectors, entitySelectors } from 'alexs-redux-fetch';
-import auth, { selectors as rawAuthSelectors } from './auth';
-import api from './api';
+import { selectors as rawAuthSelectors } from './auth';
+import { getApiState, getAuthState } from './index';
 
-export default combineReducers({
-  api,
-  auth
-})
-
-
-export const getApiState = state => state.api
-export const getAuthState = state => state.auth
-
+// Checks if the entity has been updated recently
 const getIsFresh = (state, entityName, id) => {
   const timestamp = entitySelectors.getTimestamp(state, entityName, id);
 
@@ -21,17 +12,16 @@ const getIsFresh = (state, entityName, id) => {
   return Date.now() - timestamp < 5000;
 }
 
+// Add our custom entity selector to the entity selectors
 const customEntitySelectors = {
   ...entitySelectors,
   getIsFresh
 }
 
-export const todoSelectors = createEntitySelectors('todo', state => state.api, customEntitySelectors);
-export const userSelectors = createEntitySelectors('user', state => state.api, customEntitySelectors);
-
-export const fetchSelectors = createFetchSelectors(state => state.api);
-
-export const authSelectors = nestSelectors(rawAuthSelectors, state => state.auth);
+const todoSelectors = createEntitySelectors('todo', getApiState, customEntitySelectors);
+const userSelectors = createEntitySelectors('user', getApiState, customEntitySelectors);
+const fetchSelectors = createFetchSelectors(getApiState);
+const authSelectors = nestSelectors(rawAuthSelectors, getAuthState);
 
 export const getAccount = (state, withOptimistic = true) => {
   if (!authSelectors.getIsLoggedIn(state)) {
@@ -41,7 +31,8 @@ export const getAccount = (state, withOptimistic = true) => {
   return userSelectors.getById(state, authSelectors.getUserId(state), withOptimistic)
 }
 
-export const getUsersTodos = (state, id) => {
+//  Add selector to get a user's todos
+userSelectors.getTodos = (state, id) => {
   const user = userSelectors.getById(state, id)
 
   if (!user || !Array.isArray(user.todos)) {
@@ -51,10 +42,16 @@ export const getUsersTodos = (state, id) => {
   return user.todos.map(id => todoSelectors.getById(state, id)).filter(Boolean)
 }
 
-export const getIsApiFresh = (state, ref) => {
+// Add selectors to check if api has been called recently
+fetchSelectors.getIsApiFresh = (state, ref) => {
   const timestamp = fetchSelectors.getTimestamp(state, ref);
 
-  console.log('checking fresh', Date.now() - timestamp < 5000, Date.now() - timestamp, timestamp)
-
   return Date.now() - timestamp < 5000;
+}
+
+export {
+  todoSelectors,
+  userSelectors,
+  fetchSelectors,
+  authSelectors
 }
