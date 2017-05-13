@@ -1,7 +1,6 @@
 import { action } from 'alexs-redux-helpers/actions';
 import { createEditActions } from 'alexs-redux-fetch/entities/actions';
-import { fetchCancel } from 'alexs-redux-fetch/fetch/actions';
-import { fetchAction } from 'alexs-redux-fetch/fetch/actions';
+import { fetchAction, fetchCancel } from 'alexs-redux-fetch/fetch/actions';
 import { REMOVE_TODO_FROM_LOCAL_USER } from './action-types';
 import { authSelectors, todoSelectors } from './../reducers/selectors';
 import * as refs from './../refs';
