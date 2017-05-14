@@ -5,9 +5,12 @@ import api from './api';
 
 export const login = (username, password) => api(false)
   .then(() => attemptLogin(username, password))
-  .then(({ error, user }) => error ? { error } : { response: { ...normalize(user, User), userId: user.id } })
-  .catch(error => ({ error: error.message }))
+  .then(({ error, user }) => {
+    if (error) {
+      return error
+    }
 
-export const logout = () => api()
-  .then(response => ({ response }))
-  .catch(error => ({ error: error.message }))
+    return { ...normalize(user, User), userId: user.id }
+  })
+
+export const logout = () => api();

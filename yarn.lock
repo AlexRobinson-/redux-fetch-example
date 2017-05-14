@@ -53,8 +53,8 @@ ajv@^4.7.0, ajv@^4.9.1:
     json-stable-stringify "^1.0.1"
 
 alexs-redux-fetch@^1.0.39:
-  version "1.0.40"
-  resolved "https://registry.yarnpkg.com/alexs-redux-fetch/-/alexs-redux-fetch-1.0.40.tgz#b0c975a78d978805cf2b7304962130be85c76174"
+  version "1.0.43"
+  resolved "https://registry.yarnpkg.com/alexs-redux-fetch/-/alexs-redux-fetch-1.0.43.tgz#96cac7c51cf3f30fdfb54f75d3956f9011043165"
   dependencies:
     alexs-redux-helpers "^1.0.7"
     babel-polyfill "^6.23.0"
@@ -1055,8 +1055,8 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000618, caniuse-db@^1.0.30000639:
-  version "1.0.30000667"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000667.tgz#fb6060dbf349c101df26f421442419802fc6dab1"
+  version "1.0.30000669"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000669.tgz#dbe8f25700ecda631dfb05cb71027762bd4b03e5"
 
 cardinal@^1.0.0:
   version "1.0.0"
@@ -1505,13 +1505,13 @@ debug@2.2.0, debug@~2.2.0:
   dependencies:
     ms "0.7.1"
 
-debug@2.6.1, debug@^2.1.1, debug@^2.2.0, debug@^2.6.0:
+debug@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
     ms "0.7.2"
 
-debug@2.6.4, debug@^2.1.0:
+debug@2.6.4, debug@^2.1.0, debug@^2.1.1, debug@^2.2.0, debug@^2.6.0:
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.4.tgz#7586a9b3c39741c0282ae33445c4e8ac74734fe0"
   dependencies:
@@ -5085,8 +5085,8 @@ ua-parser-js@^0.7.9:
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.12.tgz#04c81a99bdd5dc52263ea29d24c6bf8d4818a4bb"
 
 uglify-js@^2.6, uglify-js@~2.8.22:
-  version "2.8.23"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.23.tgz#8230dd9783371232d62a7821e2cf9a817270a8a0"
+  version "2.8.24"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.24.tgz#48eb5175cf32e22ec11a47e638d7c8b4e0faf2dd"
   dependencies:
     source-map "~0.5.1"
     yargs "~3.10.0"

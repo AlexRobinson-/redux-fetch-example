@@ -74,10 +74,7 @@ export const removeTodo = id => (dispatch, getState) => {
       todoApi
         .removeTodo(id)
         .then(res => {
-          if (res.error === undefined) {
-            // remove todo from local user on success
             dispatch(removeTodoFromUserLocally(authSelectors.getUserId(getState()), id));
-          }
           return res;
         })
     )
